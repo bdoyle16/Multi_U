@@ -72,7 +72,10 @@ try :
         distance_f = pulse_duration_f * 17000
             continue
         distance_f = round(distance_f, 3)
-        #print ('Distance : %f cm'%distance)
+        if distance_f >= 100 :
+                loc = f
+                end
+                
         sensor.dist_sendor(distance)
         
         sensor.r.sleep()
