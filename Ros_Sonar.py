@@ -74,13 +74,44 @@ try :
         distance_f = round(distance_f, 3)
         if distance_f >= 100 :
                 loc = "f"
-        elsif distance_l >= 100 :
+                continue
+        elif distance_l >= 100 :
                 loc = "l"
-        if distance_r >= 100 :
+                continue
+        elif distance_r >= 100 :
                 loc = "r"
-        if distance_d >= 100 :
+                continue
+        elif distance_d >= 100 :
                 loc = "d"
-        if dis
+                continue
+        elif distance_f >= 100 and disntance_l >= 100 :
+                loc = "fl"
+                continue
+        elif distance_f >= 100 and distance_r >= 100 :
+                loc = "fr"
+                continue
+        elif distance_f >= 100 and distance_d >= 100 :
+                loc = "fd"
+                continue
+        elif distance_l >= 100 and distance_r >= 100 :
+                loc = "lr"
+                continue
+        elif distance_l >= 100 and distance_d >= 100 :
+                loc = "ld"
+                continue
+        elif distance_r >= 100 and distance_d >= 100 :
+                loc = "rd"
+                continue
+        elif distance_f >= 100 and distance_l >= 100 and distance_r >=100 :
+                loc = "flr"
+                continue
+        elif distance_f >= 100 and distance_l >= 100 and distance_d >= 100 :
+                loc = "fld"
+                continue
+        elif distance_f >= 100 and distance_r >= 100 and distance_d >= 100 :
+                loc = "frd"
+                continue
+        elif distance_l >= 100 and distance_r >= 100 and distance_d >= 100 :
         
                 
         sensor.dist_sendor(distance)
