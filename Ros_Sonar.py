@@ -73,8 +73,15 @@ try :
             continue
         distance_f = round(distance_f, 3)
         if distance_f >= 100 :
-                loc = f
-                end
+                loc = "f"
+        elsif distance_l >= 100 :
+                loc = "l"
+        if distance_r >= 100 :
+                loc = "r"
+        if distance_d >= 100 :
+                loc = "d"
+        if dis
+        
                 
         sensor.dist_sendor(distance)
         
