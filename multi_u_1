@@ -5,7 +5,7 @@ import time
 import sys
 import signal
 import rospy
-from std_msgs.msg import String
+from std_msgs.msg import Int16MultiArray
 
 def signal_handler(signal, frame): # ctrl + c -> exit program
         print('You pressed Ctrl+C!')
@@ -16,10 +16,10 @@ signal.signal(signal.SIGINT, signal_handler)
 class sonar():
     def __init__(self):
         rospy.init_node('sonar', anonymous=True)
-        self.distance_publisher = rospy.Publisher('/sonar_loc',String, queue_size=1) # Int16MultiArray
+        self.distance_publisher = rospy.Publisher('/sonar_loc',Int16MultiArray, queue_size=1) # Int16MultiArray
         self.r = rospy.Rate(15)
     def dist_sendor(self,dist):
-        data = String()
+        data = Int16MultiArray()
         data.data=dist
         self.distance_publisher.publish(data)
         
@@ -102,55 +102,26 @@ try :
         distance_d = pulse_duration_d * 17000
             continue
         distance_d = round(distance_d, 3)
-        if distance_f >= 100 not distance_l >= 100 not distance_r >= 100 not distance_d >= 100 :
+        if distance_f <= 100 not distance_l >= 100 not distance_r >= 100 not distance_d >= 100 :
                 ultra_vector[0] = 1
-                loc = "f"
+                
                 continue
         elif distance_l >= 100 not distance_f >= 100 not distance_r >= 100 not distance_d >= 100:
-                loc = "l"
+               ultra_vector[1] = 1
+        
                 continue
         elif distance_r >= 100 not distance_f >= 100 not distance_l >= 100 not distance_d >= 100:
-                loc = "r"
+               ultra_vector[2] = 1
+        
                 continue
         elif distance_d >= 100 not distance_f >= 100 not distance_l >= 100 not distance_r >= 100:
-                loc = "d"
-                continue
-        elif distance_f >= 100 and disntance_l >= 100 not distance_r >= 100 not distance_d >= 100 :
-                loc = "fl"
-                continue
-        elif distance_f >= 100 and distance_r >= 100 not distance_l >= 100 not distance_d >= 100 :
-                loc = "fr"
-                continue
-        elif distance_f >= 100 and distance_d >= 100 not distance_l >= 100 not distance_r >= 100 :
-                loc = "fd"
-                continue
-        elif distance_l >= 100 and distance_r >= 100 not distance_f >= 100 not distance_d >= 100 :
-                loc = "lr"
-                continue
-        elif distance_l >= 100 and distance_d >= 100 not distance_f >= 100 not distance_r >= 100 :
-                loc = "ld"
-                continue
-        elif distance_r >= 100 and distance_d >= 100 not distance_f >= 100 not distance_l >= 100 :
-                loc = "rd"
-                continue
-        elif distance_f >= 100 and distance_l >= 100 and distance_r >=100 not distance_d >= 100:
-                loc = "flr"
-                continue
-        elif distance_f >= 100 and distance_l >= 100 and distance_d >= 100 not distance_r >= 100:
-                loc = "fld"
-                continue
-        elif distance_f >= 100 and distance_r >= 100 and distance_d >= 100 not distance_l >= 100:
-                loc = "frd"
-                continue
-        elif distance_l >= 100 and distance_r >= 100 and distance_d >= 100 not distance_f >= 100:
-                loc = "lrd"
-                continue
-        elif distance_f >= 100 and distance_r >=100 and distance_d >= 100 and distance_l >= 100 :
-                loc = "flrd"
-                continue
-        #print ('Location : %f '%loc)
+                ultra_vector[3] = 1
                 
-        sensor.dist_sendor(loc)
+       
+                continue
+        #print ('Location : %f '%ultra_vector)
+                
+        sensor.dist_sendor(ultra_vector)
         
         sensor.r.sleep()
         
