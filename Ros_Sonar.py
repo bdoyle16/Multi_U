@@ -81,7 +81,27 @@ try :
         pulse_duration_l = pulse_end_l - pulse_start_l
         distance_l = pulse_duration_l * 17000
             continue
-        distance_l = round(distance_f, 3)
+        distance_l = round(distance_l, 3)
+        while gpio.input(echo_r) == 0 :
+            pulse_start_r = time.time()
+            #print('no')
+        while gpio.input(echo_r) == 1 :
+            pulse_end_r = time.time()
+            #print('yes')
+        pulse_duration_r = pulse_end_r - pulse_start_r
+        distance_r = pulse_duration_r * 17000
+            continue
+        distance_r = round(distance_r, 3)
+        while gpio.input(echo_d) == 0 :
+            pulse_start_d = time.time()
+            #print('no')
+        while gpio.input(echo_d) == 1 :
+            pulse_end_d = time.time()
+            #print('yes')
+        pulse_duration_d = pulse_end_d - pulse_start_d
+        distance_d = pulse_duration_d * 17000
+            continue
+        distance_d = round(distance_d, 3)
         if distance_f >= 100 not distance_l >= 100 not distance_r >= 100 not distance_d >= 100 :
                 loc = "f"
                 continue
@@ -118,10 +138,10 @@ try :
         elif distance_f >= 100 and distance_l >= 100 and distance_d >= 100 not distance_r >= 100:
                 loc = "fld"
                 continue
-        elif distance_f >= 100 and distance_r >= 100 and distance_d >= 100 :
+        elif distance_f >= 100 and distance_r >= 100 and distance_d >= 100 not distance_l >= 100:
                 loc = "frd"
                 continue
-        elif distance_l >= 100 and distance_r >= 100 and distance_d >= 100 :
+        elif distance_l >= 100 and distance_r >= 100 and distance_d >= 100 not distance_f >= 100:
                 loc = "lrd"
                 continue
         elif distance_f >= 100 and distance_r >=100 and distance_d >= 100 and distance_l >= 100 :
